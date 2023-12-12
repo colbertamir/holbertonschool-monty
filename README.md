@@ -1,1 +1,3 @@
-# holbertonschool-monty
+# Holbertonschool-monty
+
+### Amir Colbert
