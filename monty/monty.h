@@ -46,7 +46,7 @@ int _strcmp(char *opcode, char *list);
 void add(stack_t **stack, unsigned int line_num);
 void swap(stack_t **stack, unsigned int line_num);
 void pop(stack_t **stack, unsigned int line_num);
-void push(stack_t **stack, unsigned int line_num, const char *n_str);
+void push(stack_t **stack, unsigned int line_num, int value);
 void pall(stack_t **stack, unsigned int line_num);
 void execute(char *string[], stack_t *stack);
 int nlfind(char *list);

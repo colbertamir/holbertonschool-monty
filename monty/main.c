@@ -31,43 +31,48 @@ int main(int argc, char *argv[])
 
 void execute(char *instructions[], stack_t *my_stack)
 {
-	int line_number, index, i;
+    int line_number, index, i;
 
-	instruction_t instruction_set[] = {
-		{"pall", pall},
-		{"pint", pint},
-		{"add", add},
-		{"swap", swap},
-		{"pop", pop},
-		{"null", NULL}
-	};
+    instruction_t instruction_set[] = {
+        {"pall", pall},
+        {"pint", pint},
+        {"add", add},
+        {"swap", swap},
+        {"pop", pop},
+        {"null", NULL}
+    };
 
-	for (line_number = 1, index = 0; instructions[index + 1]; index++, line_number++)
-	{
-		if (_strcmp("push", instructions[index]))
-			push(&my_stack, line_number, pushint(instructions[index], line_number));
-		else if (_strcmp("nop", instructions[index]))
-			;
-		else
-		{
-			i = 0;
-			while (!_strcmp(instruction_set[i].opcode, "null"))
-			{
-				if (_strcmp(instruction_set[i].opcode, instructions[index]))
-				{
-					instruction_set[i].f(&my_stack, line_number);
-					break;
-				}
-				i++;
-			}
-			if (_strcmp(instruction_set[i].opcode, "null") && !_strcmp(instructions[index], "\n"))
-			{
-				fprintf(stderr, "L%u: unknown instruction %s", line_number, instructions[index]);
-				if (!nlfind(instructions[index]))
-					fprintf(stderr, "\n");
-				exit(EXIT_FAILURE);
-			}
-		}
-	}
-	free_stack(my_stack);
+    for (line_number = 1, index = 0; instructions[index + 1]; index++, line_number++)
+    {
+        if (_strcmp("push", instructions[index]))
+        {
+            int value = pushint(instructions[index], line_number);
+            push(&my_stack, line_number, value);
+        }
+        else if (_strcmp("nop", instructions[index]))
+        {
+            /* Perform a "no operation" or handle as needed */
+        }
+        else
+        {
+            i = 0;
+            while (!_strcmp(instruction_set[i].opcode, "null"))
+            {
+                if (_strcmp(instruction_set[i].opcode, instructions[index]))
+                {
+                    instruction_set[i].f(&my_stack, line_number);
+                    break;
+                }
+                i++;
+            }
+            if (_strcmp(instruction_set[i].opcode, "null") && !_strcmp(instructions[index], "\n"))
+            {
+                fprintf(stderr, "L%u: unknown instruction %s", line_number, instructions[index]);
+                if (!nlfind(instructions[index]))
+                    fprintf(stderr, "\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+    free_stack(my_stack);
 }
